@@ -6,7 +6,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html>
       <head></head>
-      <body>
+      <body className="min-h-screen">
         <Header />
         {children}
       </body>

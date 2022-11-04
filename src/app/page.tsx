@@ -34,11 +34,13 @@ export default function Home() {
         Selected value:{' '}
         {options.find(o => o.id === selectedId)?.value || 'Не выбрано'}
       </div>
-      <DropDown
-        options={options}
-        select={setSelectedId}
-        selected={selectedId}
-      />
+      <div className="mx-auto max-w-xs">
+        <DropDown
+          options={options}
+          select={setSelectedId}
+          selected={selectedId}
+        />
+      </div>
     </div>
   );
 }
