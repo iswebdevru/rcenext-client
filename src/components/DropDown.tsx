@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEventHandler, ReactNode, useEffect, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
 export interface Option {
   id: number;
@@ -33,40 +33,49 @@ export default function DropDown({ options, select, selected }: DropDownProps) {
     }
   };
 
+  const sortedOptions = options.sort((a, b) => {
+    const aMatch = a.value.startsWith(searchText);
+    const bMatch = b.value.startsWith(searchText);
+    if (aMatch && bMatch) {
+      return a.value.length - b.value.length;
+    } else if (!aMatch && bMatch) {
+      return 1;
+    } else if (aMatch && !bMatch) {
+      return -1;
+    }
+    return 0;
+  });
+
   return (
-    <div className="border-2 border-blue-900 w-56">
+    <div className="border w-56 rounded-md overflow-hidden">
       <input
         type="text"
-        className="border-2 border-blue-900"
+        className="bg-gray-50 outline-1 outline-none outline-offset-0 outline-gray-200 w-full p-3 focus:bg-gray-100"
         value={searchText}
         onChange={handleChange}
       />
-      <ul>
-        <li className="cursor-pointer" onClick={handleClickFactory(null)}>
-          Не выбрано
+      <ul className="max-h-72 overflow-auto">
+        <li
+          className={`cursor-pointer border-t p-3 transition ${
+            selected === null ? 'bg-red-50 hover:bg-red-50' : 'hover:bg-gray-50'
+          }`}
+          onClick={handleClickFactory(null)}
+        >
+          -
         </li>
-        {options
-          .sort((a, b) => {
-            const aMatch = a.value.startsWith(searchText);
-            const bMatch = b.value.startsWith(searchText);
-            if (aMatch && bMatch) {
-              return a.value.length - b.value.length;
-            } else if (!aMatch && bMatch) {
-              return 1;
-            } else if (aMatch && !bMatch) {
-              return -1;
-            }
-            return 0;
-          })
-          .map(({ id, value }) => (
-            <li
-              className="cursor-pointer"
-              key={id}
-              onClick={handleClickFactory(id)}
-            >
-              {value}
-            </li>
-          ))}
+        {sortedOptions.map(({ id, value }) => (
+          <li
+            className={`cursor-pointer border-t p-3 transition ${
+              selected === id
+                ? 'bg-green-50 hover:bg-green-50'
+                : 'hover:bg-gray-50'
+            }`}
+            key={id}
+            onClick={handleClickFactory(id)}
+          >
+            {value}
+          </li>
+        ))}
       </ul>
     </div>
   );

@@ -17,11 +17,13 @@ function groupToString({ name, index, course }: Group) {
 
 export default function Home() {
   const options = [
-    { id: 1, value: 'first' },
-    { id: 2, value: 'second' },
-    { id: 3, value: 'урожай' },
-    { id: 4, value: 'урод' },
-    { id: 5, value: 'умник' },
+    { id: 1, value: 'ИС-203' },
+    { id: 2, value: 'ИС-103' },
+    { id: 3, value: 'ИС-302' },
+    { id: 4, value: 'ССА-104' },
+    { id: 5, value: 'ТО-234' },
+    { id: 6, value: 'ИБ-234' },
+    { id: 7, value: 'ПНГ-234' },
   ];
   const [selectedId, setSelectedId] = useState<null | number>(null);
 
