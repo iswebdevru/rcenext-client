@@ -29,12 +29,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Home</h1>
-      <div>
-        Selected value:{' '}
-        {options.find(o => o.id === selectedId)?.value || 'Не выбрано'}
-      </div>
-      <div className="mx-auto max-w-xs">
+      <div className="mx-auto mt-4 max-w-xs">
         <DropDown
           options={options}
           select={setSelectedId}

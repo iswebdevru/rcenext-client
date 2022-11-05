@@ -5,7 +5,15 @@ import '../styles/globals.css';
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html>
-      <head></head>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              const theme = localStorage.getItem('settings/theme');theme && document.documentElement.classList.add(theme);
+            `,
+          }}
+        ></script>
+      </head>
       <body className="min-h-screen">
         <Header />
         {children}

@@ -1,2 +1,6 @@
 @tailwind base;
 @tailwind utilities;
+
+body {
+  @apply bg-violet-50 dark:bg-zinc-900 transition-colors;
+}
