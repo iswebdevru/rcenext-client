@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import DropDown from '../components/DropDown';
 import Schedule from '../components/Schedule';
-import SideBar from './SideBar';
+import SideBar from '../components/SideBar';
 
 export default function Index() {
   const options = [
@@ -21,6 +21,10 @@ export default function Index() {
     <div className="mt-20 px-4 mx-auto flex max-w-7xl gap-6 items-start">
       <SideBar />
       <div className="grid gap-4 grid-cols-3 flex-1">
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
         <Schedule />
         <Schedule />
         <Schedule />

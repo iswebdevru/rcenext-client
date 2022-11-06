@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import ThemeButton from '../components/ThemeButton';
+import ThemeButton from './ThemeButton';
 
 export default function Header() {
   return (
