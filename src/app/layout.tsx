@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from './Header';
 import '../styles/globals.css';
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           }}
         ></script>
       </head>
-      <body className="min-h-screen">
+      <body className="bg-white dark:bg-zinc-900 transition-colors">
         <Header />
         {children}
       </body>

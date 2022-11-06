@@ -2,20 +2,10 @@
 
 import { useState } from 'react';
 import DropDown from '../components/DropDown';
+import Schedule from '../components/Schedule';
+import SideBar from './SideBar';
 
-interface Group {
-  id: number;
-  name: string;
-  index: number;
-  course: number;
-  block: number;
-}
-
-function groupToString({ name, index, course }: Group) {
-  return `${name}-${course}${index < 10 ? `0${index}` : index}`;
-}
-
-export default function Home() {
+export default function Index() {
   const options = [
     { id: 1, value: 'ИС-203' },
     { id: 2, value: 'ИС-103' },
@@ -28,13 +18,13 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState<null | number>(null);
 
   return (
-    <div>
-      <div className="mx-auto mt-4 max-w-xs">
-        <DropDown
-          options={options}
-          select={setSelectedId}
-          selected={selectedId}
-        />
+    <div className="mt-20 px-4 mx-auto flex max-w-7xl gap-6 items-start">
+      <SideBar />
+      <div className="grid gap-4 grid-cols-3 flex-1">
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
       </div>
     </div>
   );
