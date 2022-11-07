@@ -1,25 +1,33 @@
 'use client';
 
 import { useState } from 'react';
-import DropDown from '../components/DropDown';
+import { Calendar } from '../components/Calendar';
 import Schedule from '../components/Schedule';
+import Search from '../components/Search';
 import SideBar from '../components/SideBar';
+import Tabs from '../components/Tabs';
+
+const SCHEDULE_TYPES = ['Смешанное', 'Основное', 'Изменения'];
 
 export default function Index() {
-  const options = [
-    { id: 1, value: 'ИС-203' },
-    { id: 2, value: 'ИС-103' },
-    { id: 3, value: 'ИС-302' },
-    { id: 4, value: 'ССА-104' },
-    { id: 5, value: 'ТО-234' },
-    { id: 6, value: 'ИБ-234' },
-    { id: 7, value: 'ПНГ-234' },
-  ];
-  const [selectedId, setSelectedId] = useState<null | number>(null);
+  const [date, setDate] = useState(new Date());
+  const [text, setText] = useState('');
+  const [active, setActive] = useState(0);
 
   return (
     <div className="mt-20 px-4 mx-auto flex max-w-7xl gap-6 items-start">
-      <SideBar />
+      <SideBar>
+        <div className="p-3">
+          <Calendar date={date} setDate={setDate} />
+        </div>
+        <hr className="border-zinc-200 dark:border-zinc-700 transition-colors mb-3" />
+        <div className="p-3">
+          <Search text={text} setText={setText} />
+        </div>
+        <div className="p-3">
+          <Tabs items={SCHEDULE_TYPES} active={active} setActive={setActive} />
+        </div>
+      </SideBar>
       <div className="grid gap-4 grid-cols-3 flex-1">
         <Schedule />
         <Schedule />
