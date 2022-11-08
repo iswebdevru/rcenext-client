@@ -22,7 +22,7 @@ export default function Tabs({ active, items, setActive }: TabsProps) {
                 'w-full text-sm text-neutral-800 px-2 py-1 transition-colors dark:text-neutral-100':
                   true,
                 'bg-violet-200 dark:bg-violet-700': index === active,
-                'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700':
+                'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700':
                   index !== active,
               })}
             >

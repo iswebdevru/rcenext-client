@@ -1,2 +1,22 @@
 @tailwind base;
 @tailwind utilities;
+
+.common-border {
+  @apply border-zinc-200 dark:border-zinc-700;
+}
+
+.common-outline {
+  @apply outline-zinc-200 dark:outline-zinc-700;
+}
+
+.common-scrollbar {
+  @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-300 scrollbar-thumb-rounded-md hover:scrollbar-thumb-zinc-400 dark:scrollbar-thumb-zinc-600 dark:hover:scrollbar-thumb-zinc-500;
+}
+
+.common-text {
+  @apply text-neutral-800 dark:text-neutral-200;
+}
+
+.common-focus {
+  @apply focus:outline-2 focus:outline-violet-200 dark:focus:outline-violet-700;
+}
