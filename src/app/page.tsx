@@ -68,7 +68,23 @@ export default function Index() {
           />
         </div>
       </SideBar>
-      <div className="grid gap-4 grid-cols-3 flex-1">
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 flex-1">
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
+        <Schedule />
         <Schedule />
         <Schedule />
         <Schedule />

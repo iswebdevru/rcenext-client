@@ -17,7 +17,7 @@ export default function Arrow({
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g stroke="none" stroke-width="1">
+      <g stroke="none" strokeWidth="1">
         <g transform="translate(-616.000000, -2467.000000)">
           <g transform="translate(100.000000, 2404.000000)">
             <g transform="translate(510.000000, 54.000000)">

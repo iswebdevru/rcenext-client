@@ -121,33 +121,40 @@ export default function DropDown({
         onFocus={() => setShowOptions(true)}
       />
       <div
-        className="top-full left-0 right-0 absolute z-10 outline-1 transition-[height] outline-none common-outline -outline-offset-1 rounded-md origin-top"
-        style={{ height }}
+        className={classNames({
+          'absolute top-full left-0 right-0': true,
+          'py-2 pb-4': showOptions,
+        })}
       >
-        <ul
-          className="overflow-auto transition-[height] rounded-md duration-200 common-scrollbar"
+        <div
+          className="z-10 outline-1 transition-[height] outline-none common-outline -outline-offset-1 rounded-md origin-top"
           style={{ height }}
         >
-          {optionsWithDefault.map(({ id, value }, index) => (
-            <li key={id}>
-              <button
-                className={classNames({
-                  'w-full text-left text-sm common-text select-none h-9 px-4 transition':
-                    true,
-                  'bg-violet-100 hover:bg-violet-100 dark:bg-violet-800':
-                    active === id,
-                  'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700':
-                    active !== id,
-                  'border-t common-border': index !== 0,
-                })}
-                onClick={handleSelectFactory(id)}
-                onKeyDown={handleKeyDownFactory(id)}
-              >
-                {value}
-              </button>
-            </li>
-          ))}
-        </ul>
+          <ul
+            className="overflow-auto transition-[height] rounded-md duration-200 common-scrollbar"
+            style={{ height }}
+          >
+            {optionsWithDefault.map(({ id, value }, index) => (
+              <li key={id}>
+                <button
+                  className={classNames({
+                    'w-full text-left text-sm common-text select-none h-9 px-4 transition':
+                      true,
+                    'bg-violet-100 hover:bg-violet-100 dark:bg-violet-800':
+                      active === id,
+                    'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700':
+                      active !== id,
+                    'border-t common-border': index !== 0,
+                  })}
+                  onClick={handleSelectFactory(id)}
+                  onKeyDown={handleKeyDownFactory(id)}
+                >
+                  {value}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
