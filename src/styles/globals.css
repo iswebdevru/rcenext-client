@@ -13,7 +13,7 @@
   @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-300 scrollbar-thumb-rounded-md hover:scrollbar-thumb-zinc-400 dark:scrollbar-thumb-zinc-600 dark:hover:scrollbar-thumb-zinc-500;
 }
 
-::-webkit-scrollbar {
+.common-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
 

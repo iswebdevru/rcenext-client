@@ -8,7 +8,7 @@ import {
   notSunday,
   prevMonth,
 } from '../lib/date';
-import Arrow from '../icons/Arrow';
+import Arrow from './icons/Arrow';
 import { useEffect } from 'react';
 
 export interface CalendarProps {

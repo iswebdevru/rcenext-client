@@ -122,7 +122,7 @@ export default function DropDown({
       />
       <div
         className={classNames({
-          'absolute top-full left-0 right-0': true,
+          'absolute transition-[padding] top-full left-0 right-0': true,
           'py-2 pb-4': showOptions,
         })}
       >

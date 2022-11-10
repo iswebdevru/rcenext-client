@@ -44,7 +44,7 @@ export default function Index() {
 
   return (
     <div className="mt-20 px-4 mx-auto flex max-w-7xl gap-6 items-start">
-      <SideBar>
+      <SideBar title="Фильтры">
         <div className="p-4">
           <Calendar date={date} setDate={setDate} />
         </div>
