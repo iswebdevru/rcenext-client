@@ -17,7 +17,9 @@ export default function Header() {
         <div className="flex flex-col sm:flex-row items-center justify-between flex-1">
           <nav>
             <ul className="flex flex-col sm:flex-row gap-8">
-              <li className="font-semibold hover:text-violet-500">First</li>
+              <li className="font-semibold hover:text-violet-500">
+                <Link href="/admin">Админ</Link>
+              </li>
               <li className="font-semibold hover:text-violet-500">Second</li>
               <li className="font-semibold hover:text-violet-500">Third</li>
               <li className="font-semibold hover:text-violet-500">Fourth</li>

@@ -72,27 +72,6 @@ export default function Index() {
         <Schedule />
         <Schedule />
         <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
-        <Schedule />
       </div>
     </div>
   );
