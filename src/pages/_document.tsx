@@ -13,7 +13,7 @@ export default function Document() {
           `}
         </Script>
       </Head>
-      <body className="bg-white transition-colors dark:bg-zinc-900">
+      <body className="transition-colors bg-zinc-100 dark:bg-zinc-900">
         <Main />
         <NextScript />
       </body>

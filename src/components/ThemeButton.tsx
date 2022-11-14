@@ -1,5 +1,3 @@
-'use client';
-
 export default function ThemeButton() {
   const handleClick = () => {
     document.documentElement.classList.toggle('dark');

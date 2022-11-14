@@ -1,5 +1,3 @@
-'use client';
-
 import classNames from 'classnames';
 import {
   getDaysForCalendarPage,
@@ -7,8 +5,8 @@ import {
   nextMonth,
   notSunday,
   prevMonth,
-} from '../lib/date';
-import Arrow from './icons/Arrow';
+} from '../../lib/date';
+import Arrow from '../icons/Arrow';
 import { useEffect } from 'react';
 
 export interface CalendarProps {

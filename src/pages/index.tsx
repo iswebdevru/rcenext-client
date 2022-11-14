@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Calendar } from '../components/Calendar';
-import Schedule from '../components/Schedule';
+import { Calendar } from '../components/common/Calendar';
 import Search from '../components/Search';
 import SideBar from '../components/layout/SideBar';
-import Tabs from '../components/Tabs';
-import DropDown from '../components/DropDown';
+import Tabs from '../components/common/Tabs';
+import DropDown from '../components/common/DropDown';
 import Layout from '../components/layout/Layout';
 import Head from 'next/head';
+import Container from '../components/layout/Container';
 
 const SCHEDULE_TYPES = ['Смешанное', 'Основное', 'Изменения'];
 const BLOCKS = [
@@ -47,7 +47,7 @@ export default function Home() {
       <Head>
         <title>РКЭ Next</title>
       </Head>
-      <div className="px-4 mx-auto flex max-w-7xl gap-6 items-start">
+      <Container>
         <SideBar title="Фильтры">
           <div className="p-4">
             <Calendar date={date} setDate={setDate} />
@@ -72,12 +72,8 @@ export default function Home() {
             />
           </div>
         </SideBar>
-        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 flex-1">
-          <Schedule />
-          <Schedule />
-          <Schedule />
-        </div>
-      </div>
+        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 flex-1"></div>
+      </Container>
     </Layout>
   );
 }

@@ -24,3 +24,7 @@
 .common-focus {
   @apply focus:outline-2 focus:outline-violet-200 dark:focus:outline-violet-700;
 }
+
+.component-bg {
+  @apply bg-white dark:bg-zinc-800;
+}

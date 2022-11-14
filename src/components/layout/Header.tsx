@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 // import { useState } from 'react';
 import Logo from '../icons/Logo';
@@ -9,7 +7,7 @@ export default function Header() {
   // const [opened, setOpened] = useState(false);
 
   return (
-    <header className="fixed bottom-0 left-0 top-0 right-0 z-50 sm:h-14 transition-colors border-b common-border bg-zinc-100 text-black dark:text-white dark:bg-zinc-800">
+    <header className="fixed bottom-0 left-0 top-0 right-0 z-50 sm:h-14 transition-colors border-b common-border component-bg text-black dark:text-white">
       <div className="max-w-7xl h-full px-4 mx-auto flex flex-col sm:flex-row items-center gap-40">
         <Link href="/" className="group">
           <Logo />

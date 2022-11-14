@@ -5,18 +5,21 @@ import { PropsWithChildren, useState } from 'react';
 
 interface SideBarProps {
   title: string;
+  className?: string;
 }
 
 export default function SideBar({
   children,
   title,
+  className,
 }: PropsWithChildren<SideBarProps>) {
   const [opened, setOpened] = useState(false);
 
   return (
     <aside
       className={classNames({
-        'z-40 rounded-t-2xl fixed w-full left-0 transition-[top,background-color,border-color] sm:w-auto sm:sticky sm:left-auto sm:top-20 sm:max-w-xs sm:rounded-md border common-border shrink-0 bg-zinc-100 dark:bg-zinc-800':
+        [className ? className : '']: className,
+        'z-40 rounded-t-2xl fixed w-full left-0 transition-[top,background-color,border-color] sm:sticky sm:left-auto sm:top-20 sm:w-80 sm:rounded-md border common-border grow-0 shrink-0 component-bg':
           true,
         'top-[20vh]': opened,
         'top-[calc(100vh-57px)]': !opened,
