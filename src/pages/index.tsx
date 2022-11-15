@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Calendar } from '../components/common/Calendar';
-import Search from '../components/Search';
+import { Calendar } from '../components/features/Calendar';
+import Search from '../components/common/Search';
 import SideBar from '../components/layout/SideBar';
 import Tabs from '../components/common/Tabs';
-import DropDown from '../components/common/DropDown';
+import Select, { Option } from '../components/common/Select';
 import Layout from '../components/layout/Layout';
 import Head from 'next/head';
 import Container from '../components/layout/Container';
@@ -40,7 +40,7 @@ export default function Home() {
   const [date, setDate] = useState(new Date());
   const [searchText, setSearchText] = useState('');
   const [activeTab, setActiveTab] = useState(0);
-  const [activeBlock, setActiveBlock] = useState<null | number>(null);
+  const [activeBlock, setActiveBlock] = useState<number>(1);
 
   return (
     <Layout>
@@ -64,12 +64,15 @@ export default function Home() {
             />
           </div>
           <div className="px-4 py-2">
-            <DropDown
-              options={BLOCKS}
-              active={activeBlock}
-              setActive={setActiveBlock}
-              defaultValue="Все"
-            />
+            <Select active={activeBlock} setActive={setActiveBlock}>
+              {BLOCKS.map(block => (
+                <Option
+                  key={block.id}
+                  id={block.id}
+                  value={block.value.toString()}
+                />
+              ))}
+            </Select>
           </div>
         </SideBar>
         <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 flex-1"></div>

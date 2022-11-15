@@ -1,7 +1,7 @@
 import Link from 'next/link';
 // import { useState } from 'react';
 import Logo from '../icons/Logo';
-import ThemeButton from '../ThemeButton';
+import ThemeButton from '../features/ThemeButton';
 
 export default function Header() {
   // const [opened, setOpened] = useState(false);
