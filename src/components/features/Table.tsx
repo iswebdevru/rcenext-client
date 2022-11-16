@@ -18,7 +18,10 @@ export interface TableProps {
   heads: string[];
   children: ReactElement<TableRowProps>[];
   EditableRaw: EditableRaw;
+  onDelete?: OnDeleteFn;
 }
+
+export type OnDeleteFn = (selectedItems: number[]) => void;
 
 export interface TableRowProps {
   id: number;
@@ -59,7 +62,10 @@ export default function Table(props: TableProps) {
             >
               Добавить
             </button>
-            <button className="bg-red-500 px-4 py-2 font-semibold rounded-full text-sm text-white">
+            <button
+              className="bg-red-500 px-4 py-2 font-semibold rounded-full text-sm text-white"
+              onClick={() => props.onDelete && props.onDelete(selectedItems)}
+            >
               Удалить
             </button>
           </div>

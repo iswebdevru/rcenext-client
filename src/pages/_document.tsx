@@ -7,7 +7,6 @@ export default function Document() {
       <Head>
         <Script id="__enable_theme_memoization" strategy="beforeInteractive">
           {`
-          console.log('here');
           const theme = localStorage.getItem('settings/theme');
           theme && document.documentElement.classList.add(theme);
           `}

@@ -1,3 +1,4 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Head from 'next/head';
 import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
 import Select, { Option } from '../../components/common/Select';
@@ -9,14 +10,11 @@ import Table, {
 import AdminSidebar from '../../components/layout/AdminSidebar';
 import Container from '../../components/layout/Container';
 import Layout from '../../components/layout/Layout';
-
-interface Teacher {
-  id: number;
-  firstName: string;
-  lastName: string;
-  patronymic: string;
-  subjects: number[];
-}
+import {
+  deleteTeacher,
+  getTeachers,
+  Teacher,
+} from '../../services/rce-next-api';
 
 interface EditableTeacher extends Omit<Teacher, 'id'> {
   id: number | null;
@@ -95,15 +93,28 @@ const EditTeacher: EditableRaw = ({ id, cancel }) => {
 };
 
 export default function Teachers() {
-  const teachers: Teacher[] = [
-    {
-      id: 1,
-      firstName: 'Александр',
-      lastName: 'Тюринов',
-      patronymic: 'Дмитриевич',
-      subjects: [],
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
+    queryKey: ['teachers'],
+    queryFn: getTeachers,
+  });
+
+  const mutation = useMutation<unknown, unknown, number[]>({
+    mutationFn: selectedItems =>
+      Promise.all(selectedItems.map(id => deleteTeacher(id))),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['teachers'] });
     },
-  ];
+  });
+
+  if (query.status === 'error') {
+    return 'error';
+  }
+
+  if (query.status === 'loading') {
+    return 'loading';
+  }
 
   return (
     <>
@@ -117,13 +128,18 @@ export default function Teachers() {
             title="Преподаватели"
             heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
             EditableRaw={EditTeacher}
+            onDelete={selectedItems => mutation.mutate(selectedItems)}
           >
-            {teachers.map(teacher => (
+            {query.data.map(teacher => (
               <TableRow key={teacher.id} id={teacher.id}>
                 <TableData>{teacher.firstName}</TableData>
                 <TableData>{teacher.lastName}</TableData>
                 <TableData>{teacher.patronymic}</TableData>
-                <TableData>{teacher.subjects.toString()}</TableData>
+                <TableData>
+                  {teacher.subjects
+                    .map(({ subject }) => subject.name)
+                    .toString()}
+                </TableData>
               </TableRow>
             ))}
           </Table>
