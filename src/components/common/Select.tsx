@@ -42,30 +42,29 @@ function sortByMostAccurate(searchText: string, a: string, b: string) {
 }
 
 export default function Select(props: SelectProps) {
-  const [searchText, setSearchText] = useState<string>('');
+  const defaultText = 'Выбрать';
+  const [searchText, setSearchText] = useState<string>(defaultText);
   const [showOptions, setShowOptions] = useState(false);
-  const [shouldSort, setShouldSort] = useState(false);
+  const [sortedChildren, setSortedChildren] = useState(
+    props.children as ReactElement<OptionProps>[]
+  );
   const dropDownRef = useRef<HTMLDivElement | null>(null);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     setSearchText(event.currentTarget.value);
-    setShouldSort(true);
-  };
-
-  const displaySelected = () => {
-    if (props.type === 'many') {
-      setSearchText(
-        typedChildren
-          .filter(child => props.active.includes(child.props.id))
-          .map(child => child.props.value)
-          .toString()
-      );
+    if (event.currentTarget.value === '') {
+      setSortedChildren(props.children as any);
     } else {
-      setSearchText(
-        typedChildren.find(child => child.props.id === props.active)!.props
-          .value
+      setSortedChildren(prev =>
+        [...prev].sort((a, b) =>
+          sortByMostAccurate(searchText, a.props.value, b.props.value)
+        )
       );
     }
+  };
+
+  const onClose = () => {
+    setSearchText(defaultText);
   };
 
   // Handle outside click
@@ -79,33 +78,22 @@ export default function Select(props: SelectProps) {
 
   const count = Children.count(props.children);
   const height = showOptions ? (count < 5 ? count * 36 : 207) : 0;
-
-  const typedChildren = Children.toArray(
-    props.children
-  ) as ReactElement<OptionProps>[];
-
-  const sortedChildren = shouldSort
-    ? typedChildren.sort((a, b) =>
-        sortByMostAccurate(searchText, a.props.value, b.props.value)
-      )
-    : typedChildren;
-
   return (
     <div className="relative" ref={dropDownRef}>
       <input
         type="search"
-        className="h-9 transition-[outline,background] duration-75 outline outline-1 common-outline common-focus common-text bg-zinc-50 w-full px-4 text-sm rounded-md mb-2 dark:bg-zinc-800"
+        className="h-9 transition-[outline,background] duration-75 outline outline-1 common-outline common-focus common-text bg-zinc-50 w-full px-4 text-sm rounded-md dark:bg-zinc-800"
         value={searchText}
         onChange={handleChange}
         onFocus={() => {
           setShowOptions(true), setSearchText('');
         }}
-        onBlur={displaySelected}
+        onBlur={onClose}
       />
       <div
         className={classNames({
           'absolute transition-[padding] top-full left-0 right-0': true,
-          'py-2 pb-4': showOptions,
+          'py-4': showOptions,
         })}
       >
         <div
@@ -118,14 +106,10 @@ export default function Select(props: SelectProps) {
           >
             {sortedChildren.map((option, i) => {
               return (
-                <li>
+                <li key={option.props.id}>
                   {cloneElement(option, {
                     _index: i,
                     _parentProps: props,
-                    _setSearchText: setSearchText,
-                    _setShouldSort: setShouldSort,
-                    _displaySelected: displaySelected,
-                    _shouldSort: shouldSort,
                   })}
                 </li>
               );
@@ -142,10 +126,6 @@ interface OptionProps {
   value: string;
   _index?: number;
   _parentProps?: SelectProps;
-  _shouldSort?: boolean;
-  _setSearchText?: (state: string) => void;
-  _setShouldSort?: (state: boolean) => void;
-  _displaySelected?: () => void;
 }
 
 export function Option(props: OptionProps) {
@@ -161,8 +141,6 @@ export function Option(props: OptionProps) {
     } else {
       parentProps.setActive(props.id);
     }
-    props._setShouldSort!(false);
-    props._setSearchText!(props.value);
     // setShowOptions(false);
   };
   const handleKeyDownFactory = (
@@ -172,13 +150,6 @@ export function Option(props: OptionProps) {
       handleSelect();
     }
   };
-
-  useEffect(() => {
-    if (!props._shouldSort) {
-      props._displaySelected!();
-    }
-  }, [parentProps.active]);
-
   return (
     <button
       className={classNames({

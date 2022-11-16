@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react';
+import Select, { Option } from '../../components/common/Select';
 import Table, {
   EditableRaw,
   TableData,
-  TableDataSmall,
   TableRow,
 } from '../../components/features/Table';
 import AdminSidebar from '../../components/layout/AdminSidebar';
@@ -22,7 +22,18 @@ interface EditableTeacher extends Omit<Teacher, 'id'> {
   id: number | null;
 }
 
-const EditTeacher: EditableRaw = ({ id }) => {
+function InputText(props: ComponentPropsWithoutRef<'input'>) {
+  return (
+    <input
+      {...props}
+      type="text"
+      className="w-full min-w-0 transition-[outline] duration-75 outline outline-1 common-outline common-focus px-4 h-8 text-sm rounded-md"
+    />
+  );
+}
+
+const EditTeacher: EditableRaw = ({ id, cancel }) => {
+  const [selectedSubjects, setSelectedSubjects] = useState<number[]>([]);
   const [teacher, setTeacher] = useState<EditableTeacher | null>(
     id === null
       ? {
@@ -43,35 +54,42 @@ const EditTeacher: EditableRaw = ({ id }) => {
     };
 
   return (
-    <tr className="transition-colors border-b common-border">
-      <TableDataSmall>
+    <tr className="transition-colors border-b common-border h-14">
+      <td className="text-sm px-3 py-2">
         <div className="w-5 h-5 bg-black"></div>
-      </TableDataSmall>
-      <TableData>
-        <input
-          type="text"
+      </td>
+      <td className="text-sm px-3 py-2">
+        <InputText
           value={teacher?.firstName}
           onChange={handleInputTextFactory('firstName')}
         />
-      </TableData>
-      <TableData>
-        <input
-          type="text"
+      </td>
+      <td className="text-sm px-3 py-2">
+        <InputText
           value={teacher?.lastName}
           onChange={handleInputTextFactory('lastName')}
         />
-      </TableData>
-      <TableData>
-        <input
-          type="text"
+      </td>
+      <td className="text-sm px-3 py-2">
+        <InputText
           value={teacher?.patronymic}
           onChange={handleInputTextFactory('patronymic')}
         />
-      </TableData>
-      <TableData>to be implemented...</TableData>
-      <TableDataSmall>
-        <button>Cancel</button>
-      </TableDataSmall>
+      </td>
+      <td className="text-sm px-3 py-2">
+        <Select
+          type="many"
+          active={selectedSubjects}
+          setActive={setSelectedSubjects}
+        >
+          <Option id={1} value="Математика" />
+          <Option id={2} value="Русский язык" />
+          <Option id={3} value="Информатика" />
+        </Select>
+      </td>
+      <td className="text-sm px-3 py-2">
+        <button className="w-5 h-5 bg-black" onClick={cancel}></button>
+      </td>
     </tr>
   );
 };

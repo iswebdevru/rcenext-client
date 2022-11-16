@@ -8,7 +8,10 @@ import {
   useState,
 } from 'react';
 
-export type EditableRaw = (props: { id: number | null }) => JSX.Element;
+export type EditableRaw = (props: {
+  id: number | null;
+  cancel: () => void;
+}) => JSX.Element;
 
 export interface TableProps {
   title: string;
@@ -36,6 +39,10 @@ export default function Table(props: TableProps) {
     setEditingItemId(null);
   };
 
+  const cancel = () => {
+    setEditingItemId(undefined);
+  };
+
   return (
     <div className="transition-colors grow self-stretch border rounded-md common-border component-bg">
       <div className="px-8 py-6">
@@ -58,18 +65,20 @@ export default function Table(props: TableProps) {
           </div>
         </div>
       </div>
-      <table className="w-full">
+      <table className="w-full table-fixed">
         <tbody>
           <tr className="transition-colors border-b common-border">
             <th aria-label="Выбрать" className="p-3 text-sm w-11"></th>
             {props.heads.map((head, i) => (
-              <th key={i} className="px-6 py-3 text-sm text-left">
+              <th key={i} className="p-3 text-sm text-left">
                 {head as string}
               </th>
             ))}
             <th aria-label="Изменить" className="p-3 text-sm w-11"></th>
           </tr>
-          {editingItemId === null ? <props.EditableRaw id={null} /> : undefined}
+          {editingItemId === null ? (
+            <props.EditableRaw id={null} cancel={cancel} />
+          ) : undefined}
           <>
             {Children.map(props.children, row =>
               cloneElement(row, {
@@ -99,26 +108,22 @@ export function TableRow({
     return _setSelectedItems!(prev => [...prev, id]);
   };
   return (
-    <tr className="transition-colors border-b common-border">
-      <TableDataSmall>
+    <tr className="transition-colors border-b common-border h-14">
+      <TableData>
         <input
           type="checkbox"
           checked={_selectedItems!.includes(id)}
           onChange={handleSelectItem}
         />
-      </TableDataSmall>
+      </TableData>
       <>{children}</>
-      <TableDataSmall>
+      <TableData>
         <button>edit</button>
-      </TableDataSmall>
+      </TableData>
     </tr>
   );
 }
 
 export function TableData({ children }: TableDataProps) {
-  return <td className="px-6 py-3 text-sm">{children}</td>;
-}
-
-export function TableDataSmall({ children }: TableDataProps) {
   return <td className="p-3 text-sm">{children}</td>;
 }
