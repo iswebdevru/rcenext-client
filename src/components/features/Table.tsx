@@ -9,8 +9,8 @@ import {
 } from 'react';
 
 export type EditableRaw = (props: {
-  id: number | null;
-  cancel: () => void;
+  id: EntityId;
+  close: () => void;
 }) => JSX.Element;
 
 export interface TableProps {
@@ -32,18 +32,18 @@ export interface TableRowProps {
 
 export interface TableDataProps extends PropsWithChildren {}
 
+export type EntityId = number | 'raw';
+
 export default function Table(props: TableProps) {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const [editingItemId, setEditingItemId] = useState<
-    number | null | undefined
-  >();
+  const [editingItemId, setEditingItemId] = useState<EntityId | null>(null);
 
   const addRow = () => {
-    setEditingItemId(null);
+    setEditingItemId('raw');
   };
 
   const cancel = () => {
-    setEditingItemId(undefined);
+    setEditingItemId(null);
   };
 
   return (
@@ -82,8 +82,8 @@ export default function Table(props: TableProps) {
             ))}
             <th aria-label="Изменить" className="p-3 text-sm w-11"></th>
           </tr>
-          {editingItemId === null ? (
-            <props.EditableRaw id={null} cancel={cancel} />
+          {editingItemId === 'raw' ? (
+            <props.EditableRaw id="raw" close={cancel} />
           ) : undefined}
           <>
             {Children.map(props.children, row =>
