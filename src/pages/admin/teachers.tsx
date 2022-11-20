@@ -51,24 +51,33 @@ const EditTeacher: EditableRaw = ({ id, close }) => {
   };
 
   return (
-    <tr className="transition-colors border-b common-border h-14">
+    <tr className="transition-colors  border-b common-border h-14">
       <td className="text-sm px-3 py-2">
         <button className="w-5 h-5 bg-black" onClick={close}></button>
       </td>
       <td className="text-sm px-3 py-2">
         <InputText
+          placeholder="Имя"
+          pattern="[а-яА-Я\s]+"
+          required
           value={firstName}
           onChange={e => setFirstName(e.target.value)}
         />
       </td>
       <td className="text-sm px-3 py-2">
         <InputText
+          placeholder="Фамилия"
+          pattern="[а-яА-Я\s]+"
+          required
           value={lastName}
           onChange={e => setLastName(e.target.value)}
         />
       </td>
       <td className="text-sm px-3 py-2">
         <InputText
+          placeholder="Отчество"
+          pattern="[а-яА-Я\s]+"
+          required
           value={patronymic}
           onChange={e => setPatronymic(e.target.value)}
         />

@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind utilities;
+@tailwind components;
 
 .common-border {
   @apply border-zinc-200 dark:border-zinc-700;
@@ -31,4 +32,16 @@
 
 .component-bg {
   @apply bg-white dark:bg-zinc-800;
+}
+
+.common-invalid:invalid:not(:placeholder-shown) {
+  @apply outline-red-400 dark:outline-red-700;
+}
+
+.common-invalid:empty {
+  @apply outline-red-400 dark:outline-red-700;
+}
+
+.common-valid {
+  @apply valid:outline-green-400 dark:valid:outline-green-700;
 }
