@@ -9,6 +9,10 @@
   @apply outline-zinc-200 dark:outline-zinc-700;
 }
 
+.common-placeholder {
+  @apply placeholder:text-neutral-400 dark:placeholder:text-neutral-500;
+}
+
 .common-scrollbar {
   @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-300 scrollbar-thumb-rounded-md hover:scrollbar-thumb-zinc-400 dark:scrollbar-thumb-zinc-600 dark:hover:scrollbar-thumb-zinc-500;
 }
@@ -22,7 +26,7 @@
 }
 
 .common-focus {
-  @apply focus:outline-2 focus:outline-violet-200 dark:focus:outline-violet-700;
+  @apply focus:outline-2 focus:outline-accent-400 dark:focus:outline-accent-700;
 }
 
 .component-bg {

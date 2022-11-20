@@ -7,6 +7,7 @@ import {
   SetStateAction,
   useState,
 } from 'react';
+import Search from '../common/Search';
 
 export type EditableRaw = (props: {
   id: EntityId;
@@ -49,12 +50,19 @@ export default function Table(props: TableProps) {
   return (
     <div className="transition-colors grow self-stretch border rounded-md common-border component-bg">
       <div className="px-8 py-6">
-        <h1 className="text-2xl font-bold mb-4">{props.title}</h1>
+        <h1 className="text-2xl font-bold mb-9 text-readable-700 dark:text-readable-200">
+          {props.title}
+        </h1>
         <div className="flex items-center">
-          <input
-            type="search"
-            className="outline outline-1 px-4 py-1 rounded-md"
-          />
+          <div>
+            <Search
+              text={''}
+              setText={function (text: string): void {
+                throw new Error('Function not implemented.');
+              }}
+              placeholder="Поиск"
+            />
+          </div>
           <div className="ml-auto flex items-center gap-4">
             <button
               className="bg-violet-500 px-4 py-2 font-semibold rounded-full text-sm text-white"
@@ -73,10 +81,13 @@ export default function Table(props: TableProps) {
       </div>
       <table className="w-full table-fixed">
         <tbody>
-          <tr className="transition-colors border-b common-border">
+          <tr className="bg-zinc-50 transition-colors border-b border-t common-border dark:bg-zinc-700">
             <th aria-label="Выбрать" className="p-3 text-sm w-11"></th>
             {props.heads.map((head, i) => (
-              <th key={i} className="p-3 text-sm text-left">
+              <th
+                key={i}
+                className="p-3 text-sm text-readable-500 text-left dark:text-readable-300"
+              >
                 {head as string}
               </th>
             ))}
@@ -131,5 +142,9 @@ export function TableRow({
 }
 
 export function TableData({ children }: TableDataProps) {
-  return <td className="p-3 text-sm">{children}</td>;
+  return (
+    <td className="p-3 text-sm text-readable-900 dark:text-readable-200">
+      {children}
+    </td>
+  );
 }

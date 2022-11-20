@@ -82,7 +82,7 @@ export default function Select(props: SelectProps) {
     <div className="relative" ref={dropDownRef}>
       <input
         type="search"
-        className="h-9 transition-[outline,background] duration-75 outline outline-1 common-outline common-focus common-text bg-zinc-50 w-full px-4 text-sm rounded-md dark:bg-zinc-800"
+        className="h-9 transition-[outline,background] duration-75 outline outline-1 common-outline common-focus common-text bg-white w-full px-4 text-sm rounded-md dark:bg-zinc-800"
         value={searchText}
         onChange={handleChange}
         onFocus={() => {
@@ -153,14 +153,12 @@ export function Option(props: OptionProps) {
   return (
     <button
       className={classNames({
-        'w-full text-left text-sm common-text select-none h-9 px-4 transition':
-          true,
-        'bg-violet-100 hover:bg-violet-100 dark:bg-violet-800': Array.isArray(
-          parentProps.active
-        )
-          ? parentProps.active.includes(props.id)
-          : parentProps.active === props.id,
-        'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700':
+        'w-full text-left text-sm select-none h-9 px-4 transition': true,
+        'bg-accent-400 text-white dark:text-readable-200 dark:bg-accent-800':
+          Array.isArray(parentProps.active)
+            ? parentProps.active.includes(props.id)
+            : parentProps.active === props.id,
+        'bg-white text-readable-700 dark:text-readable-200 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700':
           Array.isArray(parentProps.active)
             ? !parentProps.active.includes(props.id)
             : parentProps.active !== props.id,

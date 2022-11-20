@@ -1,21 +1,21 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
 
-export interface SearchProps {
+export interface SearchProps extends ComponentPropsWithoutRef<'input'> {
   text: string;
   setText: (text: string) => void;
 }
 
-export default function Search({ text, setText }: SearchProps) {
+export default function Search({ text, setText, ...restProps }: SearchProps) {
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     setText(event.currentTarget.value);
   };
   return (
     <input
+      {...restProps}
       type="search"
-      placeholder="Искать по группе"
       value={text}
       onChange={handleChange}
-      className="text-sm common-text bg-zinc-50 px-4 h-9 transition-[outline,background] duration-75 rounded-md w-full outline outline-1 common-outline common-focus dark:bg-zinc-800  dark:placeholder:text-zinc-500"
+      className="text-sm common-text common-outline common-focus common-placeholder bg-white px-4 h-9 transition-[outline,background] duration-75 rounded-md w-full outline outline-1 dark:bg-zinc-800"
     />
   );
 }

@@ -54,7 +54,11 @@ export default function Home() {
           </div>
           <hr className="common-border transition-colors mb-4" />
           <div className="px-4 py-2">
-            <Search text={searchText} setText={setSearchText} />
+            <Search
+              text={searchText}
+              setText={setSearchText}
+              placeholder="Искать по группе"
+            />
           </div>
           <div className="px-4 py-2">
             <Tabs

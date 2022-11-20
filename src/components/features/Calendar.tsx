@@ -69,25 +69,25 @@ export function Calendar({ date, setDate }: CalendarProps) {
       <table className="w-full">
         <tbody>
           <tr>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               ПН
             </th>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               ВТ
             </th>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               СР
             </th>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               ЧТ
             </th>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               ПТ
             </th>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               СБ
             </th>
-            <th className="transition-colors font-semibold text-sm text-neutral-400 text-center w-10 h-10 dark:text-neutral-600">
+            <th className="transition-colors font-semibold text-sm text-readable-400 text-center w-10 h-10 dark:text-readable-600">
               ВС
             </th>
           </tr>
@@ -101,20 +101,22 @@ export function Calendar({ date, setDate }: CalendarProps) {
                       day.getMonth() !== date.getMonth() || day.getDay() === 0
                     }
                     className={classNames({
-                      'transition-colors duration-75 font-semibold text-center text-sm cursor-pointer rounded-lg w-full h-full':
+                      'transition-colors duration-75 font-semibold text-center text-sm rounded-lg w-full h-full':
                         true,
-                      'bg-violet-200 dark:bg-violet-700':
+                      'bg-accent-400 text-white dark:text-readable-200 dark:bg-accent-700 cursor-default':
                         day.getDate() === date.getDate() &&
                         day.getMonth() === date.getMonth(),
-                      ' hover:bg-zinc-200 dark:hover:bg-zinc-700':
+                      'hover:bg-zinc-100 dark:hover:bg-zinc-700':
                         day.getDate() !== date.getDate() &&
                         day.getMonth() === date.getMonth() &&
                         day.getDay() !== 0,
-                      'text-neutral-400 dark:text-neutral-600':
+                      'text-readable-400 dark:text-readable-600':
                         day.getMonth() !== date.getMonth() ||
                         day.getDay() === 0,
-                      'text-neutral-800 dark:text-neutral-100':
-                        day.getMonth() === date.getMonth(),
+                      'text-readable-700 dark:text-readable-200':
+                        day.getMonth() === date.getMonth() &&
+                        day.getDay() !== 0 &&
+                        day.getDate() !== date.getDate(),
                     })}
                   >
                     {day.getDate()}

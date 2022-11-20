@@ -5,7 +5,7 @@ export default function InputText(props: ComponentPropsWithoutRef<'input'>) {
     <input
       {...props}
       type="text"
-      className="w-full min-w-0 transition-[outline] duration-75 outline outline-1 common-outline common-focus px-4 h-8 text-sm rounded-md"
+      className="w-full min-w-0 transition-[outline] duration-75 outline outline-1 common-outline common-focus px-4 h-8 text-sm rounded-md text-readable-800 bg-white dark:text-readable-200 dark:bg-zinc-800"
     />
   );
 }

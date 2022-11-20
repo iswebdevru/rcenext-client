@@ -12,17 +12,17 @@ export default function Tabs({ active, items, setActive }: TabsProps) {
   };
 
   return (
-    <div className="transition-colors rounded-md bg-zinc-200 dark:bg-zinc-700">
-      <ul className="border-2 border-zinc-200 transition-colors flex rounded-md flex-wrap overflow-hidden gap-[2px] dark:border-zinc-700">
+    <div className="transition-colors rounded-md bg-white dark:bg-zinc-700">
+      <ul className="border common-border transition-colors flex rounded-md flex-wrap overflow-hidden">
         {items.map((item, index) => (
           <li key={index} className="flex-1">
             <button
               onClick={handleClickFactory(index)}
               className={classNames({
-                'w-full text-sm text-neutral-800 px-2 py-1 transition-colors dark:text-neutral-100':
-                  true,
-                'bg-violet-200 dark:bg-violet-700': index === active,
-                'bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700':
+                'w-full text-sm px-2 py-1 transition-colors': true,
+                'bg-violet-400 text-white dark:text-readable-200 dark:bg-violet-700':
+                  index === active,
+                'text-readable-700 hover:bg-zinc-100 dark:text-readable-200 dark:bg-zinc-800 dark:hover:bg-zinc-700':
                   index !== active,
               })}
             >
