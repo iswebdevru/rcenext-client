@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
-import { z } from 'zod';
 import InputText from '../../components/common/InputText';
 import Select, { Option } from '../../components/common/Select';
 import Table, {
@@ -18,37 +17,38 @@ import {
   deleteTeacher,
   getSubjects,
   getTeachers,
-} from '../../services/rce-api';
-import { Teacher } from '../../services/rce-contracts';
+} from '../../rce/api';
+import { TeacherWithSubjects } from '../../rce/contracts';
+import { TeacherSchema } from '../../rce/schemas';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
-      teachers: await getTeachers(),
+      ssrTeachers: await getTeachers(),
     },
   };
 };
 
-export default function Teachers({ teachers }: { teachers: Teacher[] }) {
+interface TeachersProps {
+  ssrTeachers: TeacherWithSubjects[];
+}
+
+export default function Teachers({ ssrTeachers }: TeachersProps) {
   const queryClient = useQueryClient();
 
-  const query = useQuery({
+  const { data: teachers } = useQuery({
     queryKey: ['teachers'],
     queryFn: getTeachers,
-    initialData: teachers,
+    initialData: ssrTeachers,
   });
 
-  const mutation = useMutation<unknown, unknown, number[]>({
-    mutationFn: selectedItems =>
+  const { mutate: deleteSelectedTeachers } = useMutation({
+    mutationFn: (selectedItems: number[]) =>
       Promise.all(selectedItems.map(id => deleteTeacher(id))),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['teachers'] });
     },
   });
-
-  if (query.status === 'error') {
-    return 'error';
-  }
 
   return (
     <>
@@ -62,9 +62,9 @@ export default function Teachers({ teachers }: { teachers: Teacher[] }) {
             title="Преподаватели"
             heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
             editableRaw={<EditTeacher />}
-            onDelete={selectedItems => mutation.mutate(selectedItems)}
+            onDelete={deleteSelectedTeachers}
           >
-            {query.data.map(teacher => (
+            {teachers.map(teacher => (
               <TableRow key={teacher.id} id={teacher.id}>
                 <TableData>{teacher.firstName}</TableData>
                 <TableData>{teacher.lastName}</TableData>
@@ -100,7 +100,6 @@ function EditTeacher() {
     mutationFn: createTeacher,
     onSuccess: () => {
       queryClient.invalidateQueries(['teachers']);
-      close();
     },
   });
 
@@ -167,10 +166,3 @@ function EditTeacher() {
     </TableEditRaw>
   );
 }
-
-const TeacherSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  patronymic: z.string().min(1),
-  subjects: z.array(z.number()),
-});

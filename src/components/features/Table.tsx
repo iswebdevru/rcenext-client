@@ -1,7 +1,6 @@
 import {
   createContext,
   Dispatch,
-  MouseEventHandler,
   PropsWithChildren,
   ReactElement,
   SetStateAction,
@@ -29,7 +28,7 @@ export type EntityId = number | 'raw';
 
 export interface TableEditProps extends PropsWithChildren {
   canSave: boolean;
-  onSave: MouseEventHandler<HTMLButtonElement>;
+  onSave: () => void;
 }
 
 interface TableContext {
@@ -162,6 +161,10 @@ export function TableData({ children }: PropsWithChildren) {
 export function TableEditRaw({ children, onSave, canSave }: TableEditProps) {
   const { setEditingItemId } = useContext(tableContext);
   const cancel = () => setEditingItemId(null);
+  const save = () => {
+    setEditingItemId(null);
+    onSave();
+  };
   return (
     <tr className="transition-colors border-b common-border h-11">
       <TableData>
@@ -171,7 +174,7 @@ export function TableEditRaw({ children, onSave, canSave }: TableEditProps) {
       <TableData>
         <button
           className="w-5 h-5 bg-black"
-          onClick={onSave}
+          onClick={save}
           disabled={!canSave}
         ></button>
       </TableData>
