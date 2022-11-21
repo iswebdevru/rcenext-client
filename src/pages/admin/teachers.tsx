@@ -2,11 +2,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
+import { z } from 'zod';
 import InputText from '../../components/common/InputText';
 import Select, { Option } from '../../components/common/Select';
 import Table, {
-  EditableRaw,
   TableData,
+  TableEditRaw,
   TableRow,
 } from '../../components/features/Table';
 import AdminSidebar from '../../components/layout/AdminSidebar';
@@ -20,7 +21,69 @@ import {
 } from '../../services/rce-api';
 import { Teacher } from '../../services/rce-contracts';
 
-const EditTeacher: EditableRaw = ({ id, close }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      teachers: await getTeachers(),
+    },
+  };
+};
+
+export default function Teachers({ teachers }: { teachers: Teacher[] }) {
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
+    queryKey: ['teachers'],
+    queryFn: getTeachers,
+    initialData: teachers,
+  });
+
+  const mutation = useMutation<unknown, unknown, number[]>({
+    mutationFn: selectedItems =>
+      Promise.all(selectedItems.map(id => deleteTeacher(id))),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['teachers'] });
+    },
+  });
+
+  if (query.status === 'error') {
+    return 'error';
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Админ - преподаватели</title>
+      </Head>
+      <Layout>
+        <Container>
+          <AdminSidebar />
+          <Table
+            title="Преподаватели"
+            heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
+            editableRaw={<EditTeacher />}
+            onDelete={selectedItems => mutation.mutate(selectedItems)}
+          >
+            {query.data.map(teacher => (
+              <TableRow key={teacher.id} id={teacher.id}>
+                <TableData>{teacher.firstName}</TableData>
+                <TableData>{teacher.lastName}</TableData>
+                <TableData>{teacher.patronymic}</TableData>
+                <TableData>
+                  {teacher.subjects
+                    .map(({ subject }) => subject.name)
+                    .toString()}
+                </TableData>
+              </TableRow>
+            ))}
+          </Table>
+        </Container>
+      </Layout>
+    </>
+  );
+}
+
+function EditTeacher() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [patronymic, setPatronymic] = useState('');
@@ -50,12 +113,16 @@ const EditTeacher: EditableRaw = ({ id, close }) => {
     });
   };
 
+  const { success: canSave } = TeacherSchema.safeParse({
+    firstName,
+    lastName,
+    patronymic,
+    subjects: selectedSubjects,
+  });
+
   return (
-    <tr className="transition-colors  border-b common-border h-14">
-      <td className="text-sm px-3 py-2">
-        <button className="w-5 h-5 bg-black" onClick={close}></button>
-      </td>
-      <td className="text-sm px-3 py-2">
+    <TableEditRaw onSave={save} canSave={canSave}>
+      <TableData>
         <InputText
           placeholder="Имя"
           pattern="[а-яА-Я\s]+"
@@ -63,8 +130,8 @@ const EditTeacher: EditableRaw = ({ id, close }) => {
           value={firstName}
           onChange={e => setFirstName(e.target.value)}
         />
-      </td>
-      <td className="text-sm px-3 py-2">
+      </TableData>
+      <TableData>
         <InputText
           placeholder="Фамилия"
           pattern="[а-яА-Я\s]+"
@@ -72,8 +139,8 @@ const EditTeacher: EditableRaw = ({ id, close }) => {
           value={lastName}
           onChange={e => setLastName(e.target.value)}
         />
-      </td>
-      <td className="text-sm px-3 py-2">
+      </TableData>
+      <TableData>
         <InputText
           placeholder="Отчество"
           pattern="[а-яА-Я\s]+"
@@ -81,8 +148,8 @@ const EditTeacher: EditableRaw = ({ id, close }) => {
           value={patronymic}
           onChange={e => setPatronymic(e.target.value)}
         />
-      </td>
-      <td className="text-sm px-3 py-2">
+      </TableData>
+      <TableData>
         {status === 'success' ? (
           <Select
             type="many"
@@ -96,74 +163,14 @@ const EditTeacher: EditableRaw = ({ id, close }) => {
         ) : (
           <>'placeholder'</>
         )}
-      </td>
-      <td className="text-sm px-3 py-2">
-        <button className="w-5 h-5 bg-black" onClick={save}></button>
-      </td>
-    </tr>
-  );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {
-      teachers: await getTeachers(),
-    },
-  };
-};
-
-export default function Teachers({ teachers }: { teachers: Teacher[] }) {
-  const queryClient = useQueryClient();
-
-  const query = useQuery({
-    queryKey: ['teachers'],
-    queryFn: getTeachers,
-    initialData: teachers,
-  });
-
-  const mutation = useMutation<unknown, unknown, number[]>({
-    mutationFn: selectedItems =>
-      Promise.all(selectedItems.map(id => deleteTeacher(id))),
-    onSuccess: () => {
-      console.log('here');
-
-      queryClient.invalidateQueries({ queryKey: ['teachers'] });
-    },
-  });
-
-  if (query.status === 'error') {
-    return 'error';
-  }
-
-  return (
-    <>
-      <Head>
-        <title>Админ - преподаватели</title>
-      </Head>
-      <Layout>
-        <Container>
-          <AdminSidebar />
-          <Table
-            title="Преподаватели"
-            heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
-            EditableRaw={EditTeacher}
-            onDelete={selectedItems => mutation.mutate(selectedItems)}
-          >
-            {query.data.map(teacher => (
-              <TableRow key={teacher.id} id={teacher.id}>
-                <TableData>{teacher.firstName}</TableData>
-                <TableData>{teacher.lastName}</TableData>
-                <TableData>{teacher.patronymic}</TableData>
-                <TableData>
-                  {teacher.subjects
-                    .map(({ subject }) => subject.name)
-                    .toString()}
-                </TableData>
-              </TableRow>
-            ))}
-          </Table>
-        </Container>
-      </Layout>
-    </>
+      </TableData>
+    </TableEditRaw>
   );
 }
+
+const TeacherSchema = z.object({
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  patronymic: z.string().min(1),
+  subjects: z.array(z.number()),
+});

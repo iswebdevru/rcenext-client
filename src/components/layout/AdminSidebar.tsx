@@ -47,7 +47,7 @@ export default function AdminSidebar() {
                 <AdminLink href="/admin/teachers">Преподаватели</AdminLink>
               </li>
               <li className="mb-1 last:mb-0">
-                <AdminLink href="/admin/schedule/changes">Предметы</AdminLink>
+                <AdminLink href="/admin/subjects">Предметы</AdminLink>
               </li>
             </ul>
           </li>
