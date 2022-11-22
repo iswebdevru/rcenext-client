@@ -11,3 +11,6 @@ export const SubjectSchema = z.object({
   name: z.string().min(1),
   teachers: z.number().array(),
 });
+
+export const PartialSubjectSchema = SubjectSchema.partial();
+export const PartialTeacherSchema = TeacherSchema.partial();

@@ -31,19 +31,15 @@ export interface TableEditProps extends PropsWithChildren {
   onSave: () => void;
 }
 
-interface TableContext {
+export interface TableContext {
   selectedItems: number[];
   setSelectedItems: Dispatch<SetStateAction<number[]>>;
   editingItemId: null | EntityId;
   setEditingItemId: Dispatch<SetStateAction<null | EntityId>>;
+  editableRaw: ReactElement;
 }
 
-const tableContext = createContext<TableContext>({
-  selectedItems: [],
-  setSelectedItems: () => 0,
-  editingItemId: null,
-  setEditingItemId: () => 0,
-});
+export const tableContext = createContext<TableContext>(undefined as any);
 
 export default function Table(props: TableProps) {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -65,6 +61,7 @@ export default function Table(props: TableProps) {
         setSelectedItems,
         editingItemId,
         setEditingItemId,
+        editableRaw: props.editableRaw,
       }}
     >
       <div className="transition-colors grow self-stretch border rounded-md common-border component-bg">
@@ -124,7 +121,18 @@ export default function Table(props: TableProps) {
 }
 
 export function TableRow({ id, children }: TableRowProps) {
-  const { selectedItems, setSelectedItems } = useContext(tableContext);
+  const {
+    editableRaw,
+    editingItemId,
+    setEditingItemId,
+    selectedItems,
+    setSelectedItems,
+  } = useContext(tableContext);
+
+  if (editingItemId === id) {
+    return editableRaw;
+  }
+
   const handleSelectItem = () => {
     if (selectedItems.includes(id)) {
       return setSelectedItems(prev =>
@@ -133,6 +141,7 @@ export function TableRow({ id, children }: TableRowProps) {
     }
     return setSelectedItems(prev => [...prev, id]);
   };
+
   return (
     <tr className="transition-colors border-b common-border h-11">
       <TableData>
@@ -144,7 +153,7 @@ export function TableRow({ id, children }: TableRowProps) {
       </TableData>
       <>{children}</>
       <TableData>
-        <button>edit</button>
+        <button onClick={() => setEditingItemId(id)}>edit</button>
       </TableData>
     </tr>
   );

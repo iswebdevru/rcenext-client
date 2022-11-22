@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { z } from 'zod';
 import InputText from '../../components/common/InputText';
 import Select, { Option } from '../../components/common/Select';
 import Table, {
+  tableContext,
   TableData,
   TableEditRaw,
   TableRow,
@@ -16,8 +18,10 @@ import { shortTeacherName } from '../../lib/text-formatters';
 import {
   createSubject,
   deleteSubject,
+  getSubject,
   getSubjects,
   getTeachers,
+  updateSubject,
 } from '../../rce/api';
 import { SubjectWithTeachers } from '../../rce/contracts';
 import { SubjectSchema } from '../../rce/schemas';
@@ -85,16 +89,35 @@ export default function Subjects({ ssrSubjects }: SubjectProps) {
 function EditSubject() {
   const [name, setName] = useState('');
   const [selectedTeachers, setSelectedTeachers] = useState<number[]>([]);
+  const { editingItemId } = useContext(tableContext);
 
   const queryClient = useQueryClient();
 
-  const { data: teachers, status } = useQuery({
+  useQuery({
+    queryKey: ['subjects', editingItemId],
+    enabled: typeof editingItemId === 'number',
+    queryFn: () =>
+      getSubject(typeof editingItemId === 'number' ? editingItemId : 0),
+    onSuccess: data => {
+      setName(data.name);
+      setSelectedTeachers(data.teachers.map(teacher => teacher.teacher.id));
+    },
+  });
+
+  const { data: teachers, status: statusOfTeachers } = useQuery({
     queryKey: ['teachers'],
     queryFn: getTeachers,
   });
 
-  const { mutate } = useMutation({
-    mutationFn: createSubject,
+  const mutationFn = async (data: z.infer<typeof SubjectSchema>) => {
+    if (typeof editingItemId === 'number') {
+      return updateSubject(editingItemId, data);
+    }
+    return createSubject(data);
+  };
+
+  const { mutate: saveSubject } = useMutation({
+    mutationFn,
     onSuccess: () => {
       queryClient.invalidateQueries(['subjects']);
     },
@@ -106,7 +129,7 @@ function EditSubject() {
   });
 
   const save = () => {
-    mutate({
+    saveSubject({
       name,
       teachers: selectedTeachers,
     });
@@ -118,7 +141,7 @@ function EditSubject() {
         <InputText value={name} onChange={e => setName(e.target.value)} />
       </TableData>
       <TableData>
-        {status === 'success' ? (
+        {statusOfTeachers === 'success' ? (
           <Select
             type="many"
             active={selectedTeachers}
