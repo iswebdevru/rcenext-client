@@ -95,13 +95,12 @@ function EditSubject() {
 
   useQuery({
     queryKey: ['subjects', editingItemId],
-    enabled: typeof editingItemId === 'number',
-    queryFn: () =>
-      getSubject(typeof editingItemId === 'number' ? editingItemId : 0),
+    queryFn: () => getSubject(editingItemId as number),
     onSuccess: data => {
       setName(data.name);
       setSelectedTeachers(data.teachers.map(teacher => teacher.teacher.id));
     },
+    enabled: typeof editingItemId === 'number',
   });
 
   const { data: teachers, status: statusOfTeachers } = useQuery({
@@ -138,7 +137,12 @@ function EditSubject() {
   return (
     <TableEditRaw canSave={canSave} onSave={save}>
       <TableData>
-        <InputText value={name} onChange={e => setName(e.target.value)} />
+        <InputText
+          pattern="[а-яА-Я\s]+"
+          required
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
       </TableData>
       <TableData>
         {statusOfTeachers === 'success' ? (

@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { z } from 'zod';
 import InputText from '../../components/common/InputText';
 import Select, { Option } from '../../components/common/Select';
 import Table, {
+  tableContext,
   TableData,
   TableEditRaw,
   TableRow,
@@ -16,7 +18,9 @@ import {
   createTeacher,
   deleteTeacher,
   getSubjects,
+  getTeacher,
   getTeachers,
+  updateTeacher,
 } from '../../rce/api';
 import { TeacherWithSubjects } from '../../rce/contracts';
 import { TeacherSchema } from '../../rce/schemas';
@@ -84,6 +88,7 @@ export default function Teachers({ ssrTeachers }: TeachersProps) {
 }
 
 function EditTeacher() {
+  const { editingItemId } = useContext(tableContext);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [patronymic, setPatronymic] = useState('');
@@ -96,8 +101,27 @@ function EditTeacher() {
     queryFn: getSubjects,
   });
 
+  useQuery({
+    queryKey: ['teachers', editingItemId],
+    queryFn: () => getTeacher(editingItemId as number),
+    onSuccess: data => {
+      setFirstName(data.firstName);
+      setLastName(data.lastName);
+      setPatronymic(data.patronymic);
+      setSelectedSubjects(data.subjects.map(({ subject }) => subject.id));
+    },
+    enabled: typeof editingItemId === 'number',
+  });
+
+  const mutationFn = async (data: z.infer<typeof TeacherSchema>) => {
+    if (typeof editingItemId === 'number') {
+      return updateTeacher(editingItemId, data);
+    }
+    return createTeacher(data);
+  };
+
   const { mutate } = useMutation({
-    mutationFn: createTeacher,
+    mutationFn,
     onSuccess: () => {
       queryClient.invalidateQueries(['teachers']);
     },
