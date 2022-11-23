@@ -1,4 +1,11 @@
 import {
+  faCheck,
+  faPenToSquare,
+  faCheckDouble,
+  faEraser,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
   createContext,
   Dispatch,
   PropsWithChildren,
@@ -7,6 +14,7 @@ import {
   useContext,
   useState,
 } from 'react';
+import InputCheckbox from '../common/InputCheckbox';
 import Search from '../common/Search';
 
 export interface TableProps {
@@ -145,15 +153,20 @@ export function TableRow({ id, children }: TableRowProps) {
   return (
     <tr className="transition-colors border-b common-border h-11">
       <TableData>
-        <input
-          type="checkbox"
+        <InputCheckbox
           checked={selectedItems.includes(id)}
           onChange={handleSelectItem}
         />
       </TableData>
       <>{children}</>
       <TableData>
-        <button onClick={() => setEditingItemId(id)}>edit</button>
+        <button onClick={() => setEditingItemId(id)}>
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            size="lg"
+            className="hover:text-accent-500"
+          />
+        </button>
       </TableData>
     </tr>
   );
@@ -177,15 +190,23 @@ export function TableEditRaw({ children, onSave, canSave }: TableEditProps) {
   return (
     <tr className="transition-colors border-b common-border h-11">
       <TableData>
-        <button className="w-5 h-5 bg-black" onClick={cancel}></button>
+        <button onClick={cancel} className="group">
+          <FontAwesomeIcon
+            icon={faEraser}
+            size="lg"
+            className="transition text-red-600 group-hover:text-red-900"
+          />
+        </button>
       </TableData>
       {children}
       <TableData>
-        <button
-          className="w-5 h-5 bg-black"
-          onClick={save}
-          disabled={!canSave}
-        ></button>
+        <button onClick={save} disabled={!canSave} className="group">
+          <FontAwesomeIcon
+            icon={canSave ? faCheckDouble : faCheck}
+            size="lg"
+            className="transition text-green-500 group-disabled:opacity-50 group-hover:group-enabled:text-green-700"
+          />
+        </button>
       </TableData>
     </tr>
   );
