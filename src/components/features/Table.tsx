@@ -107,12 +107,12 @@ export default function Table(props: TableProps) {
         </div>
         <table className="w-full table-fixed">
           <tbody>
-            <tr className="bg-zinc-50 transition-colors border-b border-t common-border dark:bg-zinc-700">
-              <th aria-label="Выбрать" className="p-3 text-sm w-11"></th>
+            <tr className="transition-colors border-b border-t common-border">
+              <th aria-label="Выбрать" className="p-3 text-xs w-11"></th>
               {props.heads.map((head, i) => (
                 <th
                   key={i}
-                  className="p-3 text-sm text-readable-500 text-left dark:text-readable-300"
+                  className="p-3 text-xs tracking-wider text-readable-500 text-left font-semibold dark:text-readable-200"
                 >
                   {head as string}
                 </th>
@@ -174,7 +174,7 @@ export function TableRow({ id, children }: TableRowProps) {
 
 export function TableData({ children }: PropsWithChildren) {
   return (
-    <td className="px-3 py-2 text-sm text-readable-900 dark:text-readable-200">
+    <td className="px-3 py-2 text-xs text-readable-900 dark:text-readable-200">
       {children}
     </td>
   );
