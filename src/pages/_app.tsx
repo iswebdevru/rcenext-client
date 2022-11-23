@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const client = useMemo(() => new QueryClient(), []);
   return (
     <QueryClientProvider client={client}>
-      <div className={openSans.className}>
+      <div className={`${openSans.className} h-full`}>
         <Component {...pageProps} />
       </div>
     </QueryClientProvider>

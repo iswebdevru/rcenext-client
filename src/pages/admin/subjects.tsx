@@ -12,7 +12,6 @@ import Table, {
   TableRow,
 } from '../../components/features/Table';
 import AdminSidebar from '../../components/layout/AdminSidebar';
-import Container from '../../components/layout/Container';
 import Layout from '../../components/layout/Layout';
 import { shortTeacherName } from '../../lib/text-formatters';
 import {
@@ -61,26 +60,24 @@ export default function Subjects({ ssrSubjects }: SubjectProps) {
         <title>Админ - предметы</title>
       </Head>
       <Layout>
-        <Container>
-          <AdminSidebar />
-          <Table
-            title="Предметы"
-            heads={['Название', 'Преподаватели']}
-            editableRaw={<EditSubject />}
-            onDelete={deleteSelectedSubjects}
-          >
-            {subjects.map(subject => (
-              <TableRow key={subject.id} id={subject.id}>
-                <TableData>{subject.name}</TableData>
-                <TableData>
-                  {subject.teachers
-                    .map(({ teacher }) => shortTeacherName(teacher))
-                    .toString()}
-                </TableData>
-              </TableRow>
-            ))}
-          </Table>
-        </Container>
+        <AdminSidebar />
+        <Table
+          title="Предметы"
+          heads={['Название', 'Преподаватели']}
+          editableRaw={<EditSubject />}
+          onDelete={deleteSelectedSubjects}
+        >
+          {subjects.map(subject => (
+            <TableRow key={subject.id} id={subject.id}>
+              <TableData>{subject.name}</TableData>
+              <TableData>
+                {subject.teachers
+                  .map(({ teacher }) => shortTeacherName(teacher))
+                  .toString()}
+              </TableData>
+            </TableRow>
+          ))}
+        </Table>
       </Layout>
     </>
   );

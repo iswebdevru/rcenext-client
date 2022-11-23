@@ -6,7 +6,6 @@ import Tabs from '../components/common/Tabs';
 import Select, { Option } from '../components/common/Select';
 import Layout from '../components/layout/Layout';
 import Head from 'next/head';
-import Container from '../components/layout/Container';
 
 const SCHEDULE_TYPES = ['Смешанное', 'Основное', 'Изменения'];
 const BLOCKS = [
@@ -47,40 +46,38 @@ export default function Home() {
       <Head>
         <title>РКЭ Next</title>
       </Head>
-      <Container>
-        <SideBar title="Фильтры">
-          <div className="p-4">
-            <Calendar date={date} setDate={setDate} />
-          </div>
-          <hr className="common-border transition-colors mb-4" />
-          <div className="px-4 py-2">
-            <Search
-              text={searchText}
-              setText={setSearchText}
-              placeholder="Искать по группе"
-            />
-          </div>
-          <div className="px-4 py-2">
-            <Tabs
-              items={SCHEDULE_TYPES}
-              active={activeTab}
-              setActive={setActiveTab}
-            />
-          </div>
-          <div className="px-4 py-2">
-            <Select active={activeBlock} setActive={setActiveBlock}>
-              {BLOCKS.map(block => (
-                <Option
-                  key={block.id}
-                  id={block.id}
-                  value={block.value.toString()}
-                />
-              ))}
-            </Select>
-          </div>
-        </SideBar>
-        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 flex-1"></div>
-      </Container>
+      <SideBar title="Фильтры">
+        <div className="p-4">
+          <Calendar date={date} setDate={setDate} />
+        </div>
+        <hr className="common-border transition-colors mb-4" />
+        <div className="px-4 py-2">
+          <Search
+            text={searchText}
+            setText={setSearchText}
+            placeholder="Искать по группе"
+          />
+        </div>
+        <div className="px-4 py-2">
+          <Tabs
+            items={SCHEDULE_TYPES}
+            active={activeTab}
+            setActive={setActiveTab}
+          />
+        </div>
+        <div className="px-4 py-2">
+          <Select active={activeBlock} setActive={setActiveBlock}>
+            {BLOCKS.map(block => (
+              <Option
+                key={block.id}
+                id={block.id}
+                value={block.value.toString()}
+              />
+            ))}
+          </Select>
+        </div>
+      </SideBar>
+      <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 flex-1"></div>
     </Layout>
   );
 }

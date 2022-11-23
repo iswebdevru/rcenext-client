@@ -19,7 +19,7 @@ export default function SideBar({
     <aside
       className={classNames({
         [className ? className : '']: className,
-        'z-40 rounded-t-2xl fixed w-full left-0 transition-[top,background-color,border-color] sm:sticky sm:left-auto sm:top-20 sm:w-80 sm:rounded-md border common-border grow-0 shrink-0 component-bg':
+        'z-40 rounded-t-2xl fixed w-full left-0 transition-[top,background-color,border-color] sm:sticky sm:left-auto sm:top-[calc(var(--header-height)+1rem)] sm:w-80 sm:rounded-md sm:h-[calc(100vh-var(--header-height)-2rem)] border common-border shrink-0 grow-1 component-bg':
           true,
         'top-[20vh]': opened,
         'top-[calc(100vh-57px)]': !opened,
@@ -35,9 +35,7 @@ export default function SideBar({
           <span className="block w-8 h-1 bg-neutral-800 dark:bg-neutral-200 rounded-md"></span>
         </button>
       </div>
-      <div className="h-[calc(80vh-57px)] common-scrollbar overflow-auto sm:h-[calc(100vh-106px)]">
-        {children}
-      </div>
+      <div className="common-scrollbar overflow-auto h-full">{children}</div>
     </aside>
   );
 }

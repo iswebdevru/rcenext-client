@@ -1,13 +1,10 @@
 import Link from 'next/link';
-// import { useState } from 'react';
 import Logo from '../icons/Logo';
 import ThemeButton from '../features/ThemeButton';
 
 export default function Header() {
-  // const [opened, setOpened] = useState(false);
-
   return (
-    <header className="fixed bottom-0 left-0 top-0 right-0 z-50 sm:h-14 transition-colors border-b common-border component-bg">
+    <header className="fixed bottom-0 left-0 top-0 right-0 z-50 sm:h-[var(--header-height)] transition-colors border-b common-border component-bg">
       <div className="h-full px-6 flex flex-col sm:flex-row items-center gap-40">
         <Link href="/" className="group">
           <Logo />

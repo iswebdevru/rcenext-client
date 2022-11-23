@@ -2,6 +2,14 @@
 @tailwind utilities;
 @tailwind components;
 
+:root {
+  --header-height: 3rem;
+}
+
+#__next {
+  @apply h-full;
+}
+
 .common-border {
   @apply border-zinc-200 dark:border-zinc-700;
 }

@@ -12,7 +12,6 @@ import Table, {
   TableRow,
 } from '../../components/features/Table';
 import AdminSidebar from '../../components/layout/AdminSidebar';
-import Container from '../../components/layout/Container';
 import Layout from '../../components/layout/Layout';
 import {
   createTeacher,
@@ -60,28 +59,24 @@ export default function Teachers({ ssrTeachers }: TeachersProps) {
         <title>Админ - преподаватели</title>
       </Head>
       <Layout>
-        <Container>
-          <AdminSidebar />
-          <Table
-            title="Преподаватели"
-            heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
-            editableRaw={<EditTeacher />}
-            onDelete={deleteSelectedTeachers}
-          >
-            {teachers.map(teacher => (
-              <TableRow key={teacher.id} id={teacher.id}>
-                <TableData>{teacher.firstName}</TableData>
-                <TableData>{teacher.lastName}</TableData>
-                <TableData>{teacher.patronymic}</TableData>
-                <TableData>
-                  {teacher.subjects
-                    .map(({ subject }) => subject.name)
-                    .toString()}
-                </TableData>
-              </TableRow>
-            ))}
-          </Table>
-        </Container>
+        <AdminSidebar />
+        <Table
+          title="Преподаватели"
+          heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
+          editableRaw={<EditTeacher />}
+          onDelete={deleteSelectedTeachers}
+        >
+          {teachers.map(teacher => (
+            <TableRow key={teacher.id} id={teacher.id}>
+              <TableData>{teacher.firstName}</TableData>
+              <TableData>{teacher.lastName}</TableData>
+              <TableData>{teacher.patronymic}</TableData>
+              <TableData>
+                {teacher.subjects.map(({ subject }) => subject.name).toString()}
+              </TableData>
+            </TableRow>
+          ))}
+        </Table>
       </Layout>
     </>
   );

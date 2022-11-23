@@ -3,9 +3,11 @@ import Header from './Header';
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <>
+    <div className="h-full flex flex-col">
       <Header />
-      <div className="mt-20 px-4 max-w-7xl mx-auto">{children}</div>
-    </>
+      <div className="pt-[calc(var(--header-height)+1rem)] px-4 pb-4 flex items-start gap-4">
+        {children}
+      </div>
+    </div>
   );
 }

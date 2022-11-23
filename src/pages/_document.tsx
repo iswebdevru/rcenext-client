@@ -3,7 +3,7 @@ import Script from 'next/script';
 
 export default function Document() {
   return (
-    <Html lang="ru">
+    <Html lang="ru" className="h-full">
       <Head>
         <Script id="__enable_theme_memoization" strategy="beforeInteractive">
           {`
@@ -12,7 +12,7 @@ export default function Document() {
           `}
         </Script>
       </Head>
-      <body className="transition-colors bg-zinc-100 dark:bg-zinc-900">
+      <body className="h-full transition-colors bg-zinc-100 dark:bg-zinc-900">
         <Main />
         <NextScript />
       </body>

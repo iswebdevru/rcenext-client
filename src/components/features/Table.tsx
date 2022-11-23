@@ -105,7 +105,7 @@ export default function Table(props: TableProps) {
             </div>
           </div>
         </div>
-        <table className="w-full table-fixed">
+        <table className="w-full">
           <tbody>
             <tr className="transition-colors border-b border-t common-border">
               <th aria-label="Выбрать" className="p-3 text-xs w-11"></th>
