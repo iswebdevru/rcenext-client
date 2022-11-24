@@ -36,7 +36,7 @@ export function Calendar({ date, setDate }: CalendarProps) {
   }, [date]);
 
   return (
-    <div>
+    <div className="border common-border rounded-md component-bg p-3">
       <div className="text-center flex items-center justify-between p-1">
         <button
           onClick={handleMonthSwitcherFactory('prev')}

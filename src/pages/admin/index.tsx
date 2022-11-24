@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import AdminSidebar from '../../components/layout/AdminSidebar';
+import AdminNav from '../../components/layout/AdminNav';
 import Layout from '../../components/layout/Layout';
 
 export default function Admin() {
@@ -9,7 +9,7 @@ export default function Admin() {
         <title>Админ</title>
       </Head>
       <Layout>
-        <AdminSidebar />
+        <AdminNav />
       </Layout>
     </>
   );

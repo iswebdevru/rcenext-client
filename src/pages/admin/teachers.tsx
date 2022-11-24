@@ -11,6 +11,7 @@ import Table, {
   TableEditRaw,
   TableRow,
 } from '../../components/features/Table';
+import AdminNav from '../../components/layout/AdminNav';
 import AdminSidebar from '../../components/layout/AdminSidebar';
 import Layout from '../../components/layout/Layout';
 import {
@@ -59,7 +60,7 @@ export default function Teachers({ ssrTeachers }: TeachersProps) {
         <title>Админ - преподаватели</title>
       </Head>
       <Layout>
-        <AdminSidebar />
+        <AdminNav />
         <Table
           title="Преподаватели"
           heads={['Имя', 'Фамилия', 'Отчество', 'Предметы']}
@@ -77,6 +78,7 @@ export default function Teachers({ ssrTeachers }: TeachersProps) {
             </TableRow>
           ))}
         </Table>
+        <AdminSidebar />
       </Layout>
     </>
   );

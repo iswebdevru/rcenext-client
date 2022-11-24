@@ -47,25 +47,24 @@ export default function Home() {
         <title>РКЭ Next</title>
       </Head>
       <SideBar title="Фильтры">
-        <div className="p-4">
+        <div className="mb-4">
           <Calendar date={date} setDate={setDate} />
         </div>
-        <hr className="common-border transition-colors mb-4" />
-        <div className="px-4 py-2">
-          <Search
-            text={searchText}
-            setText={setSearchText}
-            placeholder="Искать по группе"
-          />
-        </div>
-        <div className="px-4 py-2">
-          <Tabs
-            items={SCHEDULE_TYPES}
-            active={activeTab}
-            setActive={setActiveTab}
-          />
-        </div>
-        <div className="px-4 py-2">
+        <div className="component-bg border common-border rounded-md p-3">
+          <div className="mb-3">
+            <Search
+              text={searchText}
+              setText={setSearchText}
+              placeholder="Искать по группе"
+            />
+          </div>
+          <div className="mb-3">
+            <Tabs
+              items={SCHEDULE_TYPES}
+              active={activeTab}
+              setActive={setActiveTab}
+            />
+          </div>
           <Select active={activeBlock} setActive={setActiveBlock}>
             {BLOCKS.map(block => (
               <Option
