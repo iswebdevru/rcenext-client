@@ -72,7 +72,7 @@ export default function Table(props: TableProps) {
         editableRaw: props.editableRaw,
       }}
     >
-      <div className="transition-colors grow self-stretch border rounded-md common-border component-bg">
+      <div className="transition-colors grow self-stretch">
         <div className="px-8 py-6">
           <h1 className="text-2xl font-bold mb-9 text-readable-700 dark:text-readable-200">
             {props.title}

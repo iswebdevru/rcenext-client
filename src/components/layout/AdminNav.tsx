@@ -1,4 +1,8 @@
-import { faBook, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBook,
+  faUserGroup,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link, { LinkProps } from 'next/link';
 import { PropsWithChildren } from 'react';
@@ -15,7 +19,6 @@ export const AdminLink = (props: PropsWithChildren<LinkProps>) => {
 export default function AdminNav() {
   return (
     <nav className="sticky p-3">
-      <h6 className="text-zinc-500 text-sm font-semibold mb-3">Админ панель</h6>
       <ul className="flex flex-col gap-1">
         <li>
           <AdminLink href="/admin/teachers">
@@ -23,6 +26,12 @@ export default function AdminNav() {
             <span className="text-sm font-semibold tracking-wider">
               Преподаватели
             </span>
+          </AdminLink>
+        </li>
+        <li>
+          <AdminLink href="/admin/groups">
+            <FontAwesomeIcon icon={faUserGroup} fixedWidth />
+            <span className="text-sm font-semibold tracking-wider">Группы</span>
           </AdminLink>
         </li>
         <li>

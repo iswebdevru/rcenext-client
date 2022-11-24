@@ -1,6 +1,16 @@
-import Link from 'next/link';
+import Link, { LinkProps } from 'next/link';
 import Logo from '../icons/Logo';
 import ThemeButton from '../features/ThemeButton';
+import { PropsWithChildren } from 'react';
+
+const HeaderLink = (props: PropsWithChildren<LinkProps>) => {
+  return (
+    <Link
+      {...props}
+      className="transition-colors font-medium text-sm text-zinc-700 hover:text-accent-600 dark:text-zinc-100 dark:hover:text-accent-500"
+    />
+  );
+};
 
 export default function Header() {
   return (
@@ -12,12 +22,15 @@ export default function Header() {
         <div className="flex flex-row items-center justify-between flex-1">
           <nav>
             <ul className="flex gap-8 text-sm flex-row">
-              <li className="font-medium hover:text-violet-500">
-                <Link href="/admin">Админ</Link>
+              <li>
+                <HeaderLink href="/admin">Админ</HeaderLink>
               </li>
-              <li className="font-medium hover:text-violet-500">Second</li>
-              <li className="font-medium hover:text-violet-500">Third</li>
-              <li className="font-medium hover:text-violet-500">Fourth</li>
+              <li>
+                <HeaderLink href="/admin">Админ</HeaderLink>
+              </li>
+              <li>
+                <HeaderLink href="/admin">Админ</HeaderLink>
+              </li>
             </ul>
           </nav>
           <div className="flex items-center">
