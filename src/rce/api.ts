@@ -1,6 +1,8 @@
 import { z } from 'zod';
-import { SubjectWithTeachers, TeacherWithSubjects } from './contracts';
+import { Group, SubjectWithTeachers, TeacherWithSubjects } from './contracts';
 import {
+  GroupSchema,
+  PartialGroupSchema,
   PartialSubjectSchema,
   PartialTeacherSchema,
   SubjectSchema,
@@ -82,5 +84,41 @@ export async function deleteSubject(id: number) {
   const response = await fetch(`${API}/subjects/${id}`, {
     method: 'DELETE',
   });
+  return await response.json();
+}
+
+export async function createGroup(data: z.infer<typeof GroupSchema>) {
+  const response = await fetch(`${API}/groups`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: [['Content-Type', 'application/json']],
+  });
+  return (await response.json()) as Group;
+}
+
+export async function getGroups() {
+  const response = await fetch(`${API}/groups`);
+  return (await response.json()) as Group[];
+}
+
+export async function getGroup(id: number) {
+  const response = await fetch(`${API}/groups/${id}`);
+  return (await response.json()) as Group;
+}
+
+export async function updateGroup(
+  id: number,
+  data: z.infer<typeof PartialGroupSchema>
+) {
+  const response = await fetch(`${API}/groups/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+    headers: [['Content-Type', 'application/json']],
+  });
+  return (await response.json()) as Group;
+}
+
+export async function deleteGroup(id: number) {
+  const response = await fetch(`${API}/groups/${id}`, { method: 'DELETE' });
   return await response.json();
 }

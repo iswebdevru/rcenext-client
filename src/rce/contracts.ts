@@ -10,6 +10,14 @@ export interface Subject {
   name: string;
 }
 
+export interface Group {
+  id: number;
+  name: string;
+  course: number;
+  index: number;
+  block: number;
+}
+
 export interface TeacherWithSubjects extends Teacher {
   subjects: { subject: Subject }[];
 }

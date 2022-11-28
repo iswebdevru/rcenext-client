@@ -12,7 +12,6 @@ import Table, {
   TableRow,
 } from '../../components/features/Table';
 import AdminNav from '../../components/layout/AdminNav';
-import AdminSidebar from '../../components/layout/AdminSidebar';
 import Layout from '../../components/layout/Layout';
 import { shortTeacherName } from '../../lib/text-formatters';
 import {
@@ -79,7 +78,6 @@ export default function Subjects({ ssrSubjects }: SubjectProps) {
             </TableRow>
           ))}
         </Table>
-        <AdminSidebar />
       </Layout>
     </>
   );

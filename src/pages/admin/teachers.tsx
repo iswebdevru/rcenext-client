@@ -12,7 +12,6 @@ import Table, {
   TableRow,
 } from '../../components/features/Table';
 import AdminNav from '../../components/layout/AdminNav';
-import AdminSidebar from '../../components/layout/AdminSidebar';
 import Layout from '../../components/layout/Layout';
 import {
   createTeacher,
@@ -78,7 +77,6 @@ export default function Teachers({ ssrTeachers }: TeachersProps) {
             </TableRow>
           ))}
         </Table>
-        <AdminSidebar />
       </Layout>
     </>
   );

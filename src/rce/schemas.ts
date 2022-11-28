@@ -12,5 +12,13 @@ export const SubjectSchema = z.object({
   teachers: z.number().array(),
 });
 
+export const GroupSchema = z.object({
+  name: z.string().min(1),
+  course: z.number().int(),
+  index: z.number().int(),
+  block: z.number().int(),
+});
+
 export const PartialSubjectSchema = SubjectSchema.partial();
 export const PartialTeacherSchema = TeacherSchema.partial();
+export const PartialGroupSchema = GroupSchema.partial();

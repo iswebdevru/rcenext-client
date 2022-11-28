@@ -20,7 +20,7 @@ import Search from '../common/Search';
 export interface TableProps {
   title: string;
   heads: string[];
-  children: ReactElement<TableRowProps>[];
+  children: ReactElement<TableRowProps>[] | ReactElement<TableRowProps>;
   editableRaw: ReactElement;
   onDelete?: OnDeleteFn;
 }
@@ -29,7 +29,7 @@ export type OnDeleteFn = (selectedItems: number[]) => void;
 
 export interface TableRowProps {
   id: number;
-  children: ReactElement<PropsWithChildren>[];
+  children: ReactElement<PropsWithChildren>[] | ReactElement<PropsWithChildren>;
 }
 
 export type EntityId = number | 'raw';
@@ -72,7 +72,7 @@ export default function Table(props: TableProps) {
         editableRaw: props.editableRaw,
       }}
     >
-      <div className="transition-colors grow self-stretch">
+      <div className="self-stretch transition-colors grow">
         <div className="px-8 py-6">
           <h1 className="text-2xl font-bold mb-9 text-readable-700 dark:text-readable-200">
             {props.title}
@@ -87,16 +87,16 @@ export default function Table(props: TableProps) {
                 placeholder="Поиск"
               />
             </div>
-            <div className="ml-auto flex items-center gap-4">
+            <div className="flex items-center gap-4 ml-auto">
               <button
-                className="bg-accent-500 px-4 py-2 font-semibold rounded-full text-sm text-white disabled:opacity-50 dark:bg-accent-700"
+                className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-accent-500 disabled:opacity-50 dark:bg-accent-700"
                 disabled={editingItemId !== null}
                 onClick={addRow}
               >
                 Добавить
               </button>
               <button
-                className="bg-red-500 px-4 py-2 font-semibold rounded-full text-sm text-white disabled:opacity-50 dark:bg-red-700"
+                className="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded-full disabled:opacity-50 dark:bg-red-700"
                 disabled={!selectedItems.length}
                 onClick={deleteRows}
               >
@@ -107,12 +107,12 @@ export default function Table(props: TableProps) {
         </div>
         <table className="w-full">
           <tbody>
-            <tr className="transition-colors border-b border-t common-border">
+            <tr className="transition-colors border-t border-b common-border">
               <th aria-label="Выбрать" className="p-3 text-xs w-11"></th>
               {props.heads.map((head, i) => (
                 <th
                   key={i}
-                  className="p-3 text-xs tracking-wider text-readable-500 text-left font-semibold dark:text-readable-200"
+                  className="p-3 text-xs font-semibold tracking-wider text-left text-readable-500 dark:text-readable-200"
                 >
                   {head as string}
                 </th>
@@ -194,7 +194,7 @@ export function TableEditRaw({ children, onSave, canSave }: TableEditProps) {
           <FontAwesomeIcon
             icon={faEraser}
             size="lg"
-            className="transition text-red-600 group-hover:text-red-900"
+            className="text-red-600 transition group-hover:text-red-900"
           />
         </button>
       </TableData>
@@ -204,7 +204,7 @@ export function TableEditRaw({ children, onSave, canSave }: TableEditProps) {
           <FontAwesomeIcon
             icon={canSave ? faCheckDouble : faCheck}
             size="lg"
-            className="transition text-green-500 group-disabled:opacity-50 group-hover:group-enabled:text-green-700"
+            className="text-green-500 transition group-disabled:opacity-50 group-hover:group-enabled:text-green-700"
           />
         </button>
       </TableData>
